@@ -1,5 +1,6 @@
 import {Component, Directive, ElementRef, Renderer} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import {Http, HTTP_PROVIDERS} from 'angular2/http';
 
 
 @Directive({
@@ -25,11 +26,21 @@ export class Home {
 
 @Component({
   selector: 'about',
+  providers: [HTTP_PROVIDERS],
   template: `
-  About
+  <h2>About</h2>
+  <ul>
+    <li *ngFor="#user of users">{{user}}</li>
+  </ul>
   `
 })
 export class About {
+  users:Array<string>;
+  constructor(public http:Http){
+    http.get('/api/v1/users').subscribe((res)=>{
+      this.users = res.json();
+    })
+  }
 }
 
 

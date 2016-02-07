@@ -35,6 +35,11 @@ function ngApp(req, res) {
 // Serve static files
 app.use(express.static(root));
 
+app.get('/api/v1/users', function(req, res, next){
+  let users = ['Simeon', 'Chloe', 'Brenna'];
+  res.json(users);
+});
+
 // Routes
 app.use('/', ngApp);
 app.use('/about', ngApp);
